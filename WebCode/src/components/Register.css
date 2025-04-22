@@ -1,7 +1,4 @@
-/* Login.css */
-/* *{
-    background-color: #060606;
-} */
+/* Register.css */
 .login-container {
     display: flex;
     align-items: center;
@@ -13,7 +10,7 @@
   .login-card {
     width: 100%;
     max-width: 28rem;
-    background-color: #060606;
+    background-color: #252525;
     border: 1px solid #333333;
     border-radius: 0.75rem;
     overflow: hidden;
@@ -116,42 +113,6 @@
     border-radius: 0.375rem;
     font-size: 0.875rem;
     margin-bottom: 1rem;
-  }
-  
-  .form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .remember-me {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .checkbox {
-    height: 1rem;
-    width: 1rem;
-    border-radius: 0.25rem;
-    border: 1px solid #333333;
-    background-color: #1E1E1E;
-  }
-  
-  .checkbox-label {
-    font-size: 0.875rem;
-    color: #9ca3af;
-  }
-  
-  .forgot-link {
-    font-size: 0.875rem;
-    color: #B0F127;
-    text-decoration: none;
-  }
-  
-  .forgot-link:hover {
-    text-decoration: underline;
   }
   
   .submit-button {

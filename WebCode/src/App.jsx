@@ -9,7 +9,8 @@ import Newsletter from './components/Newsletter';
 import Packages from './components/Packages';
 import Testimonials from './components/Testimonials';
 import Login from './components/Login';
-
+import Register from './components/Register';
+import VisaCard from './components/VisaCard';
 function App() {
   return (
     <Routes>
@@ -20,14 +21,16 @@ function App() {
               <Header/>
               <HeroBanner/>
               <SupportedByCompanies/>
-              <Testimonials/>
               <Packages/>
+              <VisaCard/>
+              <Testimonials/>
               <Newsletter/>
               <Footer/>
             </>
           }
         />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         {/* Add other routes here */}
       </Routes>
   );
