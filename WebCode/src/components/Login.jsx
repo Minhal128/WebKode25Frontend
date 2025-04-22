@@ -73,7 +73,8 @@ function Login() {
   };
 
   return (
-    <div className="bg-[#060606] h-full login-container">
+<div className="bg-[#060606] min-h-screen w-full flex items-center justify-center login-container">
+
       <div className="login-card">
         <div className="card-header">
           <h2 className="card-title">Login to your account</h2>
