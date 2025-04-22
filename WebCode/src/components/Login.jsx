@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
-import "./Login.css"; // You'll need to create this CSS file
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
+    <div className="bg-[#060606] h-full login-container">
       <div className="login-card">
         <div className="card-header">
           <h2 className="card-title">Login to your account</h2>

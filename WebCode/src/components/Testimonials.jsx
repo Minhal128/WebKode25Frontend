@@ -92,7 +92,7 @@ const Testimonials = () => {
       <h2 className="text-3xl font-bold mb-4">
         What Our <span className="text-lime-500">Clients</span> Say
       </h2>
-      <p className="text-gray-600 mb-8">
+      <p className="text-gray-400 mb-8">
         Trusted by supercar owners and exotic car collectors around the world.
       </p>
       <div className="relative mx-auto max-w-8xl px-4 overflow-hidden">
@@ -112,7 +112,7 @@ const Testimonials = () => {
                 <div className="  flex font-bold items-center mb-4">
                 <div className="text-lime-600"> What they say</div>
                 </div>
-                <p className="text-gray-700 mb-4">{testimonial.review}</p>
+                <p className="text-white mb-4">{testimonial.review}</p>
                 <div className=" border-t  flex items-center">
                   <div className="mt-2">
                     <p className="font-bold">{testimonial.name}</p>
@@ -126,10 +126,10 @@ const Testimonials = () => {
 
         {/* Navigation Buttons */}
         <div className="flex justify-center gap-4 mt-6">
-          <button onClick={prevTestimonial} className="p-2 bg-gray-300 rounded-full">
+          <button onClick={prevTestimonial} className="p-2 bg-black border border-lime-500 rounded-full">
             <FiChevronLeft className="text-2xl text-lime-500 font-bold" />
           </button>
-          <button onClick={nextTestimonial} className="p-2 bg-gray-300 rounded-full">
+          <button onClick={nextTestimonial} className="p-2  bg-black border border-lime-500 rounded-full">
             <FiChevronRight className="text-2xl text-lime-500 font-bold" />
           </button>
         </div>

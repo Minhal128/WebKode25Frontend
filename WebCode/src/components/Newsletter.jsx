@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Globe from '../assets/Globe.png';
 
@@ -21,9 +22,11 @@ const Newsletter = () => {
             With our user-friendly mobile and web applications, we strive to make
             managing finances easier for everyone.
           </p>
+          <Link to="/register">
           <button className="bg-lime-500 hover:bg-lime-600 text-black px-6 py-3 rounded-full flex items-center gap-2">
             Join Us <ArrowRight className="w-5 h-5" />
           </button>
+          </Link>
         </motion.div>
 
         {/* World Map */}

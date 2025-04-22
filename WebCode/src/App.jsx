@@ -6,11 +6,12 @@ import HeroBanner from './components/HeroBanner';
 import SupportedByCompanies from './components/SupportedByCompanies';
 import Footer from './components/Footer';
 import Newsletter from './components/Newsletter';
-import Packages from './components/Packages';
+// import Packages from './components/Packages';
 import Testimonials from './components/Testimonials';
 import Login from './components/Login';
 import Register from './components/Register';
 import VisaCard from './components/VisaCard';
+import RotatingCards from './components/Packages';
 function App() {
   return (
     <Routes>
@@ -21,7 +22,8 @@ function App() {
               <Header/>
               <HeroBanner/>
               <SupportedByCompanies/>
-              <Packages/>
+              {/* <Packages/> */}
+              <RotatingCards/>
               <VisaCard/>
               <Testimonials/>
               <Newsletter/>

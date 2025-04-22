@@ -1,124 +1,149 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle, ArrowRight } from 'lucide-react';
+import React, { useEffect, useState, useRef } from "react";
+import { CheckCircle2 } from "lucide-react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-// Pricing Card Component
-const PricingCard = ({
-    title,
-    price,
-    originalPrice,
-    features,
-    isPopular = false,
-}) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className={`
-        bg-gray-900 rounded-2xl p-6 space-y-6
-        ${isPopular
-                    ? 'border-2 border-lime-500 shadow-xl shadow-lime-500/30 z-10' // Increased shadow and z-index
-                    : 'border border-gray-800'
-                }
-        flex flex-col
+const packages = [
+  {
+    name: "Basic Package",
+    price: "$99",
+    oldPrice: "$150",
+    features: [
+      "Digital Transactions",
+      "Effortless Control",
+      "Secure Payments",
+      "Basic Support",
+    ],
+    buttonText: "Subscribe Now",
+  },
+  {
+    name: "Ultimate Package",
+    price: "$299",
+    oldPrice: "$450",
+    features: [
+      "24/7 Customer Support",
+      "High-Value Transactions",
+      "Global Access",
+      "Exclusive Rewards",
+    ],
+    buttonText: "Unlock Ultimate",
+  },
+  {
+    name: "Premium Package",
+    price: "$199",
+    oldPrice: "$300",
+    features: [
+      "Priority Support",
+      "Advanced Security",
+      "Monthly Reports",
+      "Personalized Assistance",
+    ],
+    buttonText: "Get Premium",
+  },
+];
+
+const PricingCard = ({ packageData, isActive, onMouseEnter, onMouseLeave, className = "" }) => {
+  return (
+    <div
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={`bg-gradient-to-b from-slate-900 to-slate-800 text-white rounded-3xl p-6
+        w-full md:w-[320px] shadow-xl transform transition-all duration-500 cursor-pointer
+        min-h-[460px] flex flex-col justify-between 
+        ${className}
+        ${isActive ? "md:scale-110 z-20" : "md:scale-90 opacity-70 z-10"}
       `}
-            style={{ zIndex: isPopular ? 10 : 1 }} // Explicitly set z-index
-        >
-            {/* Title and Popular Badge */}
-            <div className="flex items-center justify-between">
-                <h3 className="text-xl font-semibold text-white">{title}</h3>
-                {isPopular && (
-                    <span className="bg-lime-500 text-black px-3 py-1 rounded-full text-sm font-medium">
-                        Most Popular Plan
-                    </span>
-                )}
-            </div>
-
-            {/* Price */}
-            <div className="flex items-center gap-4">
-                <p className="text-3xl font-bold text-white">${price}</p>
-                {originalPrice && (
-                    <p className="text-gray-500 text-lg line-through">
-                        ${originalPrice}
-                    </p>
-                )}
-            </div>
-
-            {/* Features List */}
-            <ul className="space-y-3">
-                {features.map((feature, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                        <CheckCircle className="w-5 h-5 text-lime-500" />
-                        <span className="text-gray-400">{feature}</span>
-                    </li>
-                ))}
-            </ul>
-
-            {/* Get Started Button */}
-            <button className="bg-lime-500 hover:bg-lime-600 text-black px-6 py-3 rounded-full w-full flex items-center justify-center gap-2 mt-auto">
-                Get Started <ArrowRight className="w-5 h-5" />
-            </button>
-        </motion.div>
-    );
-};
-
-const Packages = () => {
-    return (
-        <div className="bg-black py-16 md:py-24">
-            <div className="container mx-auto px-4">
-                {/* Title */}
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-                        Best plans for you
-                    </h2>
-                </div>
-
-                {/* Pricing Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* First Card */}
-                    <PricingCard
-                        title="Digital Transactions"
-                        price={249}
-                        originalPrice={400}
-                        features={[
-                            'Digital Transactions',
-                            'Effortless Control',
-                            'Online Banking',
-                            'Completely Reliable',
-                        ]}
-                    />
-
-                    {/* Second Card (Most Popular) */}
-                    <PricingCard
-                        title="Most Popular Plan"
-                        price={249}
-                        originalPrice={400}
-                        features={[
-                            'Digital Transactions',
-                            'Effortless Control',
-                            'Online Banking',
-                            'Completely Reliable',
-                        ]}
-                        isPopular={true}
-                    />
-
-                    {/* Third Card */}
-                    <PricingCard
-                        title="Digital Transactions"
-                        price={249}
-                        originalPrice={400}
-                        features={[
-                            'Digital Transactions',
-                            'Effortless Control',
-                            'Online Banking',
-                            'Completely Reliable',
-                        ]}
-                    />
-                </div>
-            </div>
+    >
+      <div>
+        <p className="text-sm text-gray-300 mb-2">{packageData.name}</p>
+        <div className="flex items-baseline gap-3 mb-4">
+          <h2 className="text-4xl font-bold text-lime-400 mb-10">{packageData.price}</h2>
+          <span className="line-through text-gray-400 text-lg">{packageData.oldPrice}</span>
         </div>
-    );
+
+        <ul className="space-y-3 mb-6">
+          {packageData.features.map((feature, idx) => (
+            <li key={idx} className="flex items-center gap-3">
+              <CheckCircle2 className="text-lime-400 w-5 h-5" />
+              <span className="text-white font-medium">{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <button className="w-full bg-lime-500 hover:bg-lime-600 text-black font-semibold py-3 rounded-full transition mt-auto">
+        {packageData.buttonText}
+      </button>
+    </div>
+  );
 };
 
-export default Packages;
+const RotatingCards = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    if (!isHovering) {
+      intervalRef.current = setInterval(() => {
+        setActiveIndex((prev) => (prev + 1) % packages.length);
+      }, 1000);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+
+    return () => clearInterval(intervalRef.current);
+  }, [isHovering]);
+
+  const handleMouseEnter = (index) => {
+    setIsHovering(true);
+    setActiveIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+  };
+
+  const nextTestimonial = () =>
+    setActiveIndex((prev) => (prev + 1) % packages.length);
+  const prevTestimonial = () =>
+    setActiveIndex((prev) => (prev - 1 + packages.length) % packages.length);
+
+  return (
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 py-16">
+      {/* Mobile View */}
+      <div className="block md:hidden w-full max-w-sm mb-6">
+        <PricingCard
+          packageData={packages[activeIndex]}
+          isActive
+          onMouseEnter={() => handleMouseEnter(activeIndex)}
+          onMouseLeave={handleMouseLeave}
+        />
+      </div>
+
+      {/* Navigation Buttons (Mobile only) */}
+      <div className="block md:hidden flex justify-center gap-4 mb-12">
+        <button onClick={prevTestimonial} className="p-2 bg-black border border-lime-500 rounded-full">
+          <FiChevronLeft className="text-2xl text-lime-500 font-bold" />
+        </button>
+        <button onClick={nextTestimonial} className="p-2 bg-black border border-lime-500 rounded-full">
+          <FiChevronRight className="text-2xl text-lime-500 font-bold" />
+        </button>
+      </div>
+
+      {/* Desktop View */}
+      <div className="hidden md:flex gap-10 items-center justify-center">
+        {packages.map((pkg, i) => (
+          <PricingCard
+            key={i}
+            packageData={pkg}
+            isActive={i === activeIndex}
+            onMouseEnter={() => handleMouseEnter(i)}
+            onMouseLeave={handleMouseLeave}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default RotatingCards;

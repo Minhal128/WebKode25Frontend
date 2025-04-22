@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { div } from 'framer-motion/client';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,17 +23,18 @@ const Header = () => {
   }, []);
 
   return (
+
     <header
-      className={`bg-black text-white px-8 py-4 ${isSticky ? 'fixed top-0 left-0 w-full z-50 shadow-lg' : ''}`}
+      className={` bg-black text-white px-8 py-4 ${isSticky ? 'fixed top-0 left-0 w-full z-50 shadow-lg' : ''}`}
       style={{
         transition: 'all 0.3s ease-in-out', // Add smooth transition
       }}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex  px-6 items-center justify-between">
         {/* Logo and Brand */}
         <div className="flex items-center space-x-2">
           <div className="w-6 h-6 bg-lime-500 rotate-45"></div>
-          <Link to="/" className="font-bold text-lg">Finantech X</Link>
+          <Link to="/" className="font-bold text-xl">Finantech X</Link>
         </div>
 
         {/* Hamburger for Mobile */}
@@ -43,12 +45,17 @@ const Header = () => {
         </div>
 
         {/* Desktop Menu */}
-        <nav className="hidden md:flex items-center space-x-6 text-sm">
+        <nav className="hidden md:flex items-center space-x-6 text-md">
           <Link to="/" className="font-bold hover:text-lime-500">Home</Link>
           <Link to="/" className="hover:text-lime-500">About</Link>
-          <Link to="/" className="hover:text-lime-500">Blog</Link>
           <Link to="/" className="hover:text-lime-500">Contact</Link>
-          <Link to="/" className="text-lime-500">Cart(0)</Link>
+          <Link to="/register">
+            <button
+              className="bg-lime-500 hover:bg-lime-600 font-semibold text-black px-6 py-2 rounded-full text-lg"
+            >
+              Register
+            </button>
+          </Link>
         </nav>
       </div>
 
