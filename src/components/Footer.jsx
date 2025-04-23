@@ -48,8 +48,8 @@ const Footer = () => {
                         </a>
                     </div>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8 text-center md:text-left">  {/* Added text-center on mobile */}
+{/* Added text-center on mobile */}
+                {/* <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8 text-center md:text-left">  
                     <div>
                         <h4 className="font-semibold text-white mb-4">Home</h4>
                         <ul className="space-y-2">
@@ -155,7 +155,7 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="text-center flex flex-col text-sm">
                     <div>&copy; Finantech X. All Rights Reserved. Licensing.</div>
