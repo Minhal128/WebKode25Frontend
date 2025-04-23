@@ -158,8 +158,8 @@ const Footer = () => {
                 </div>
 
                 <div className="text-center flex flex-col text-sm">
-                    <div>&copy; Fintech 128. All Rights Reserved. Licensing.</div>
-                    <div>Templates by 128.digital. Powered by Webflow.</div>
+                    <div>&copy; Finantech X. All Rights Reserved. Licensing.</div>
+                    <div>Your trusted financial partner online.</div>
                 </div>
             </div>
         </footer>

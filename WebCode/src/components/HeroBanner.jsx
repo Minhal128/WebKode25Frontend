@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // Placeholder image since we don't have the exact image.  You'd replace this.
@@ -50,8 +51,7 @@ const HeroBanner = () => {
                         transition={{ duration: 0.6, ease: "easeInOut", delay: 0.2 }}
                         className="text-gray-400 text-base sm:text-lg max-w-xl"
                     >
-                        Lorem ipsum dolor sit amet consectetur adipiscing elit at pharetra nec sed erat non
-                        metus suspendisse mus non lectus vel vitae massa id in in turpis posuere laoreet tortor.
+                        Unlock a world of financial possibilities with Finantech X. Seamlessly manage your money, achieve your savings goals, and access personalized solutions designed for your unique journey. Experience secure, convenient banking that puts you in control, empowering you to build a brighter financial future, today.
                     </motion.p>
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -59,16 +59,20 @@ const HeroBanner = () => {
                         transition={{ duration: 0.6, ease: "easeInOut", delay: 0.4 }}
                         className="flex gap-4"
                     >
+                        <Link to="/register">
                         <button
-                            className="bg-lime-500 hover:bg-lime-600 text-black px-6 py-3 rounded-full text-lg"
+                            className="bg-lime-500 hover:bg-lime-600 font-semibold text-black px-6 py-3 rounded-full text-lg"
                         >
-                            Download app
+                            Get Started
                         </button>
+                        </Link>
+                        <Link to="/contactus">
                         <button
-                            className="bg-gray-80 hover:bg-gray-900 text-white px-6 py-3 rounded-full border border-gray-700 text-lg"
+                            className="bg-gray-80 hover:border-lime-500 text-white px-6 py-3 rounded-full border border-gray-700 text-lg"
                         >
-                            View pricing
+                            Contact US
                         </button>
+                        </Link>
                     </motion.div>
                 </motion.div>
 
