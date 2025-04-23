@@ -44,37 +44,34 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     if (!validateForm()) return;
-  
-    setIsLoading(true);
+
     try {
       const resultAction = await dispatch(loginUser(formData));
       
       if (loginUser.fulfilled.match(resultAction)) {
         const { requiresSubscription, data } = resultAction.payload;
         
+        // Admin users get direct access
+        if (data.user.role === 'admin') {
+          navigate('/admin');
+          return;
+        }
+        
+        // Handle subscription requirement for non-admins
         if (requiresSubscription) {
-          navigate('/', {
+          navigate('/pricing', {
             state: { 
-              message: "Kindly subscribe to use our service",
+              message: "Please subscribe to access all features",
               requiresSubscription: true
             }
           });
         } else {
-          // Role-based navigation
-          if (data.user.role === 'admin') {
-            navigate('/admin');
-          } else {
-            navigate('/');
-          }
+          navigate('/dashboard');
         }
       }
     } catch (error) {
-      console.error("Login error:", error);
-      setErrors({ form: error.message || "Login failed" });
-    } finally {
-      setIsLoading(false);
+      setErrors({ form: error.message });
     }
   };
 

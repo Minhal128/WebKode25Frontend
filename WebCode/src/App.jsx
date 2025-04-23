@@ -12,6 +12,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import VisaCard from './components/VisaCard';
 import RegisterOTP from './components/registrerOTP';
+import AdminDashboard from './admin/Dashboard';
+import ProtectedRoute from './admin/protectedroute';
 
 function App() {
   return (
@@ -35,7 +37,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/otp" element={<RegisterOTP/>} />
-        {/* Add other routes here */}
+        <Route path="/admin" element={
+          <ProtectedRoute requireAdmin>
+            <AdminDashboard />
+          </ProtectedRoute>
+        } />
       </Routes>
     </div>
   );
