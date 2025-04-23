@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import "./Login.css"; // You'll need to create this CSS file
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../feauture/auth/authSlice";
 
 function Login() {
   const navigate = useNavigate();
@@ -42,9 +44,10 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!validateForm()) return;
-
+  
+    setIsLoading(true);
     try {
       const resultAction = await dispatch(loginUser(formData));
       
@@ -52,7 +55,6 @@ function Login() {
         const { requiresSubscription, data } = resultAction.payload;
         
         if (requiresSubscription) {
-          // Store subscription status in state or show message
           navigate('/', {
             state: { 
               message: "Kindly subscribe to use our service",
@@ -60,14 +62,21 @@ function Login() {
             }
           });
         } else {
-          navigate('/');
+          // Role-based navigation
+          if (data.user.role === 'admin') {
+            navigate('/admin');
+          } else {
+            navigate('/');
+          }
         }
       }
     } catch (error) {
       console.error("Login error:", error);
+      setErrors({ form: error.message || "Login failed" });
+    } finally {
+      setIsLoading(false);
     }
   };
-
 
   return (
 <div className="bg-[#060606] min-h-screen w-full flex items-center justify-center login-container">

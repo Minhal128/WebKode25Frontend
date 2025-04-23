@@ -127,7 +127,9 @@ const authSlice = createSlice({
           id: action.payload.data.user.id,
           email: action.payload.data.user.email,
           isVerified: action.payload.data.user.isVerified,
-          isSubscribed: action.payload.data.user.isSubscribed
+          isSubscribed: action.payload.data.user.isSubscribed,
+          role: action.payload.data.user.role, // Add role here
+          name: action.payload.data.user.name // Add name if available
         };
         state.token = action.payload.token;
         state.requiresSubscription = action.payload.requiresSubscription;
