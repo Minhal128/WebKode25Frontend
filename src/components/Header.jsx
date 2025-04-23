@@ -62,7 +62,7 @@ const Header = () => {
       {/* Mobile Dropdown Menu */}
       {isOpen && (
         <div className="mt-4 flex flex-col items-center md:hidden text-sm space-y-2">
-          {["Home", "About", "Blog", "Contact", "Cart(0)"].map((text, idx) => (
+          {["Home", "About", "Contact", "Register"].map((text, idx) => (
             <Link
               key={idx}
               to="/"
