@@ -42,38 +42,42 @@ function Login() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+ // Login.jsx
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
 
-    try {
-      const resultAction = await dispatch(loginUser(formData));
+  setIsLoading(true);
+  try {
+    const resultAction = await dispatch(loginUser(formData));
+    
+    if (loginUser.fulfilled.match(resultAction)) {
+      const { requiresSubscription, data } = resultAction.payload;
       
-      if (loginUser.fulfilled.match(resultAction)) {
-        const { requiresSubscription, data } = resultAction.payload;
-        
-        // Admin users get direct access
-        if (data.user.role === 'admin') {
-          navigate('/admin');
-          return;
-        }
-        
-        // Handle subscription requirement for non-admins
-        if (requiresSubscription) {
-          navigate('/pricing', {
-            state: { 
-              message: "Please subscribe to access all features",
-              requiresSubscription: true
-            }
-          });
-        } else {
-          navigate('/dashboard');
-        }
+      // Admin users get direct access
+      if (data.user.role === 'admin') {
+        navigate('/admin');
+        return;
       }
-    } catch (error) {
-      setErrors({ form: error.message });
+      
+      // Handle subscription requirement for non-admins
+      if (requiresSubscription) {
+        navigate('/', {
+          state: { 
+            message: "Please subscribe to access all features",
+            requiresSubscription: true
+          }
+        });
+      } else {
+        navigate('/');
+      }
     }
-  };
+  } catch (error) {
+    setErrors({ form: error.message });
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
 <div className="bg-[#060606] min-h-screen w-full flex items-center justify-center login-container">
