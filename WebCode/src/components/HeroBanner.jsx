@@ -5,22 +5,13 @@ import { motion } from 'framer-motion';
 // Placeholder image since we don't have the exact image.  You'd replace this.
 const HeroImage = () => (
     <div className="relative w-full max-w-md">
-        {/* Placeholder phone frame */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl shadow-2xl opacity-40 blur-3xl" />
-        <div className="border-4 border-gray-800 rounded-xl p-2 relative z-10">
-            <div className="bg-gray-900 rounded-lg h-full w-full p-4 flex flex-col items-center justify-center">
-                <div className="text-white text-center text-sm">
-                    <p>Portfolio</p>
-                    <p className="text-green-400 font-semibold text-lg">0.22174 BTC</p>
-                    <div className="mt-4 space-x-2">
-                        <span className="bg-gray-700 text-gray-300 rounded-full px-2 py-1 text-xs">BTC</span>
-                        <span className="bg-gray-700 text-gray-300 rounded-full px-2 py-1 text-xs">ETH</span>
-                        <span className="bg-gray-700 text-gray-300 rounded-full px-2 py-1 text-xs">SOL</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {/* Placeholder crypto icons */}
+        <img 
+            src="https://imgur.com/ghLt6kz.jpg" 
+            alt="Crypto Trading Platform" 
+            className="w-full h-auto max-w-md rounded-xl shadow-2xl relative z-10"
+        />
+
+        {/* Animated elements for visual effect */}
         <div className="absolute top-1/4 left-3/4 transform -translate-x-1/2 -translate-y-1/2 space-y-4">
             <div className="w-8 h-8 bg-green-500 rounded-full animate-pulse opacity-70"></div>
             <div className="w-6 h-6 bg-blue-500 rounded-full animate-pulse opacity-70"></div>

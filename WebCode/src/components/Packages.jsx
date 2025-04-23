@@ -1,47 +1,39 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+// Checkout component is not used in this file
+import Checkout from './Checkout';
+import ComingSoonPage from './Future';
 
 const packages = [
   {
-    name: "Basic Package",
-    price: "$99",
-    oldPrice: "$150",
-    features: [
-      "Digital Transactions",
-      "Effortless Control",
-      "Secure Payments",
-      "Basic Support",
-    ],
+    name: "Basic Plan",
+    price: "$19.99/mo",
+    oldPrice: "$14.99",
+    features: ["Basic analytics", "5 transfers/month", "Email support", "Basic security"],
+    buttonText: "Get Started",
+    path: "/checkout"
+  },
+  {
+    name: "Pro Plan",
+    price: "$29.99/mo",
+    oldPrice: "$29.99",
+    features: ["Advanced analytics", "Unlimited transfers", "Priority support", "Enhanced security", "API access"],
     buttonText: "Subscribe Now",
+    path: "comingSoon"
   },
   {
-    name: "Ultimate Package",
-    price: "$299",
-    oldPrice: "$450",
-    features: [
-      "24/7 Customer Support",
-      "High-Value Transactions",
-      "Global Access",
-      "Exclusive Rewards",
-    ],
-    buttonText: "Unlock Ultimate",
-  },
-  {
-    name: "Premium Package",
-    price: "$199",
-    oldPrice: "$300",
-    features: [
-      "Priority Support",
-      "Advanced Security",
-      "Monthly Reports",
-      "Personalized Assistance",
-    ],
-    buttonText: "Get Premium",
-  },
+    name: "Enterprise Plan",
+    price: "$49.99/mo",
+    oldPrice: "$69.99",
+    features: ["Custom analytics", "Unlimited transfers", "24/7 support", "Maximum security", "API access", "Dedicated manager"],
+    buttonText: "Contact Sales",
+    path: "comingSoon"
+  }
 ];
 
-const PricingCard = ({ packageData, isActive, onMouseEnter, onMouseLeave, className = "" }) => {
+const PricingCard = ({ packageData, isActive, onMouseEnter, onMouseLeave, className = "", onSubscribe }) => {
   return (
     <div
       onMouseEnter={onMouseEnter}
@@ -53,6 +45,7 @@ const PricingCard = ({ packageData, isActive, onMouseEnter, onMouseLeave, classN
         ${isActive ? "md:scale-110 z-20" : "md:scale-90 opacity-70 z-10"}
       `}
     >
+      {/* Card content remains the same */}
       <div>
         <p className="text-sm text-gray-300 mb-2">{packageData.name}</p>
         <div className="flex items-baseline gap-3 mb-4">
@@ -70,7 +63,10 @@ const PricingCard = ({ packageData, isActive, onMouseEnter, onMouseLeave, classN
         </ul>
       </div>
 
-      <button className="w-full bg-lime-500 hover:bg-lime-600 text-black font-semibold py-3 rounded-full transition mt-auto">
+      <button 
+        onClick={() => onSubscribe(packageData)}
+        className="w-full bg-lime-500 hover:bg-lime-600 text-black font-semibold py-3 rounded-full transition mt-auto"
+      >
         {packageData.buttonText}
       </button>
     </div>
@@ -81,32 +77,92 @@ const RotatingCards = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const intervalRef = useRef(null);
+  const navigate = useNavigate();
 
+  // Auto rotate cards unless user is hovering
   useEffect(() => {
     if (!isHovering) {
       intervalRef.current = setInterval(() => {
-        setActiveIndex((prev) => (prev + 1) % packages.length);
-      }, 1000);
-    } else {
-      clearInterval(intervalRef.current);
+        setActiveIndex((prev) => (prev === packages.length - 1 ? 0 : prev + 1));
+      }, 5000); // Rotate every 5 seconds
     }
-
-    return () => clearInterval(intervalRef.current);
-  }, [isHovering]);
-
-  const handleMouseEnter = (index) => {
-    setIsHovering(true);
-    setActiveIndex(index);
-  };
+    
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isHovering]); // Added isHovering dependency
 
   const handleMouseLeave = () => {
     setIsHovering(false);
   };
 
-  const nextTestimonial = () =>
-    setActiveIndex((prev) => (prev + 1) % packages.length);
-  const prevTestimonial = () =>
-    setActiveIndex((prev) => (prev - 1 + packages.length) % packages.length);
+  const handleMouseEnter = (index) => {
+    setActiveIndex(index);
+    setIsHovering(true);
+  };
+
+  // Simulated auth check - replace with your actual auth logic
+  const isLoggedIn = () => {
+    // Replace with actual auth check (e.g., from context or localStorage)
+    return localStorage.getItem('user') !== null;
+  };
+
+  // Simulated subscription check - replace with your actual logic
+  const hasActiveSubscription = () => {
+    // Replace with actual subscription check
+    return localStorage.getItem('subscription') !== null;
+  };
+
+  useEffect(() => {
+    // If user already has an active subscription, redirect to dashboard
+    if (hasActiveSubscription()) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+  useEffect(() => {
+    // Event handler to intercept basic plan selections for logged-in users
+    const handleBasicPlanRedirect = (packageData) => {
+      if (isLoggedIn() && packageData.name.toLowerCase().includes('basic')) {
+        navigate("/checkout", { 
+          state: { 
+            packageName: packageData.name,
+            packagePrice: packageData.price,
+            planId: packageData.name.toLowerCase().replace(' ', '_')
+          }
+        });
+      }
+    };
+    
+    // Make this handler available to other functions
+    window.handleBasicPlanRedirect = handleBasicPlanRedirect;
+    
+    return () => {
+      window.handleBasicPlanRedirect = null;
+    };
+  }, [navigate]);
+
+  const prevTestimonial = () => {
+    setActiveIndex((prev) => (prev === 0 ? packages.length - 1 : prev - 1));
+  };
+
+  const nextTestimonial = () => {
+    setActiveIndex((prev) => (prev === packages.length - 1 ? 0 : prev + 1));
+  };
+
+  const handleSubscribe = (packageData) => {
+    if (packageData.path) {
+      // You can also pass package data to checkout page
+      navigate(packageData.path, { 
+        state: { 
+          packageName: packageData.name,
+          packagePrice: packageData.price,
+          planId: packageData.name.toLowerCase().replace(' ', '_')
+        }
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 py-16">
@@ -117,6 +173,7 @@ const RotatingCards = () => {
           isActive
           onMouseEnter={() => handleMouseEnter(activeIndex)}
           onMouseLeave={handleMouseLeave}
+          onSubscribe={handleSubscribe}
         />
       </div>
 
@@ -139,6 +196,7 @@ const RotatingCards = () => {
             isActive={i === activeIndex}
             onMouseEnter={() => handleMouseEnter(i)}
             onMouseLeave={handleMouseLeave}
+            onSubscribe={handleSubscribe}
           />
         ))}
       </div>

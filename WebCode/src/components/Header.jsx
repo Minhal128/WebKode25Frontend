@@ -47,8 +47,8 @@ const Header = () => {
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center space-x-6 text-md">
           <Link to="/" className="font-bold hover:text-lime-500">Home</Link>
-          <Link to="/" className="hover:text-lime-500">About</Link>
-          <Link to="/" className="hover:text-lime-500">Contact</Link>
+          <Link to="/about" className="hover:text-lime-500">About</Link>
+          <Link to="/contact" className="hover:text-lime-500">Contact</Link>
           <Link to="/register">
             <button
               className="bg-lime-500 hover:bg-lime-600 font-semibold text-black px-6 py-2 rounded-full text-lg"

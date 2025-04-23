@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
-import "./Login.css"; // You'll need to create this CSS file
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import "./Login.css";
 import { loginUser } from "../feauture/auth/authSlice";
 
 function Login() {
@@ -41,21 +41,22 @@ function Login() {
       [name]: value,
     }));
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     if (!validateForm()) return;
-  
-    setIsLoading(true);
+
     try {
+      setIsLoading(true);
       const resultAction = await dispatch(loginUser(formData));
       
-      if (loginUser.fulfilled.match(resultAction)) {
-        const { requiresSubscription, data } = resultAction.payload;
+      // Check if the action was successful
+      if (resultAction.payload) {
+        const { requiresSubscription } = resultAction.payload;
         
         if (requiresSubscription) {
-          navigate('/', {
+          navigate('/subscription-plans', {
             state: { 
               message: "Kindly subscribe to use our service",
               requiresSubscription: true
@@ -63,7 +64,7 @@ function Login() {
           });
         } else {
           // Role-based navigation
-          if (data.user.role === 'admin') {
+          if (resultAction.payload.user.role === 'admin') {
             navigate('/admin');
           } else {
             navigate('/');
@@ -72,15 +73,13 @@ function Login() {
       }
     } catch (error) {
       console.error("Login error:", error);
-      setErrors({ form: error.message || "Login failed" });
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-<div className="bg-[#060606] min-h-screen w-full flex items-center justify-center login-container">
-
+    <div className="bg-[#060606] min-h-screen w-full flex items-center justify-center login-container">
       <div className="login-card">
         <div className="card-header">
           <h2 className="card-title">Login to your account</h2>
