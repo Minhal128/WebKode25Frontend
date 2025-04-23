@@ -11,6 +11,7 @@ import Packages from './components/Packages';
 import Login from './components/Login';
 import Register from './components/Register';
 import VisaCard from './components/VisaCard';
+<<<<<<< HEAD
 // import RegisterOTP from './components/RegisterOTP'; // Component file not found
 import ContactPage from './components/Contact';
 import AboutPage from './components/AboutPage';
@@ -99,6 +100,41 @@ function App() {
         </Routes>
       </div>
     </AuthProvider>
+=======
+import RegisterOTP from './components/registrerOTP';
+import AdminDashboard from './admin/Dashboard';
+import ProtectedRoute from './admin/protectedroute';
+
+function App() {
+  return (
+    <div className="app-container">
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Header/>
+              <HeroBanner/>
+              <SupportedByCompanies/>
+              <Packages/>
+              <VisaCard/>
+              <Testimonials/>
+              <Newsletter/>
+              <Footer/>
+            </>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/otp" element={<RegisterOTP/>} />
+        <Route path="/admin" element={
+          <ProtectedRoute requireAdmin>
+            <AdminDashboard />
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </div>
+>>>>>>> 4c9952fde4d6f3fc2b896440a7343ba447aff29c
   );
 }
 

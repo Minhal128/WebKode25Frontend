@@ -2,14 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  user: null,
-  token: null,
-  loading: false,
-  error: null,
-  isVerified: false,
-  isRegistered: false,
-  requiresSubscription: false
-};
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    token: localStorage.getItem('token') || null,
+    loading: false,
+    error: null,
+    isVerified: false,
+    isRegistered: false,
+    requiresSubscription: false
+  };
+  
 
 export const registerUser = createAsyncThunk(
   'auth/register',

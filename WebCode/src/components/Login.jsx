@@ -41,22 +41,21 @@ function Login() {
       [name]: value,
     }));
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     if (!validateForm()) return;
-
+  
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const resultAction = await dispatch(loginUser(formData));
       
-      // Check if the action was successful
-      if (resultAction.payload) {
-        const { requiresSubscription } = resultAction.payload;
+      if (loginUser.fulfilled.match(resultAction)) {
+        const { requiresSubscription, data } = resultAction.payload;
         
         if (requiresSubscription) {
-          navigate('/subscription-plans', {
+          navigate('/', {
             state: { 
               message: "Kindly subscribe to use our service",
               requiresSubscription: true
@@ -64,7 +63,7 @@ function Login() {
           });
         } else {
           // Role-based navigation
-          if (resultAction.payload.user.role === 'admin') {
+          if (data.user.role === 'admin') {
             navigate('/admin');
           } else {
             navigate('/');
@@ -73,6 +72,7 @@ function Login() {
       }
     } catch (error) {
       console.error("Login error:", error);
+      setErrors({ form: error.message || "Login failed" });
     } finally {
       setIsLoading(false);
     }
