@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import "./Login.css"; // You'll need to create this CSS file
+import { loginUser } from '../feauture/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
 function Login() {
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ function Login() {
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,33 +47,29 @@ function Login() {
 
     if (!validateForm()) return;
 
-    setIsLoading(true);
-
     try {
-      // This would be a real API call in a production app
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Login failed");
+      const resultAction = await dispatch(loginUser(formData));
+      
+      if (loginUser.fulfilled.match(resultAction)) {
+        const { requiresSubscription, data } = resultAction.payload;
+        
+        if (requiresSubscription) {
+          // Store subscription status in state or show message
+          navigate('/', {
+            state: { 
+              message: "Kindly subscribe to use our service",
+              requiresSubscription: true
+            }
+          });
+        } else {
+          navigate('/');
+        }
       }
-
-      // After successful login, redirect to pricing page
-      navigate("/pricing");
     } catch (error) {
       console.error("Login error:", error);
-      setErrors({
-        form: "Invalid email or password. Please try again.",
-      });
-    } finally {
-      setIsLoading(false);
     }
   };
+
 
   return (
     <div className="login-container">

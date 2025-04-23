@@ -11,10 +11,13 @@ import Testimonials from './components/Testimonials';
 import Login from './components/Login';
 import Register from './components/Register';
 import VisaCard from './components/VisaCard';
+import RegisterOTP from './components/registrerOTP';
+
 function App() {
   return (
-    <Routes>
-      <Route
+    <div className="app-container">
+      <Routes>
+        <Route
           path="/"
           element={
             <>
@@ -31,8 +34,11 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/otp" element={<RegisterOTP/>} />
         {/* Add other routes here */}
       </Routes>
+    </div>
   );
 }
+
 export default App;
